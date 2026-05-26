@@ -734,162 +734,18 @@
 
   <script>
   /* ═══════════════════════════════════════════════════════════════
-     DATOS DE PROYECTOS
+     DATOS DE PROYECTOS — vienen de proyectos.json
      ─────────────────────────────────────────────────────────────
-     Para agregar o editar proyectos, modifica el objeto `proyectos`.
-     Cada proyecto tiene:
+     Para agregar o editar proyectos NO toques este archivo.
+     Abre proyectos.json y edita allí. Cada proyecto tiene:
        - titulo     : nombre del proyecto
        - categoria  : etiqueta visible en el card y en la ficha
-       - imagen     : ruta relativa a la imagen (ej: "assets/mareliz.jpg")
-                      deja null o "" para mostrar el placeholder
-       - descripcion: texto en formato Markdown (párrafos, negritas, listas, etc.)
+       - imagen     : ruta relativa (ej: "assets/mareliz.jpg")
+                      si la imagen no existe se muestra un placeholder
+       - descripcion: texto en Markdown (negritas, cursivas, listas…)
   ═══════════════════════════════════════════════════════════════ */
 
-  const proyectos = {
-
-    diseno: [
-      {
-        titulo: "Mareliz",
-        categoria: "Identidad visual",
-        imagen: null,
-        descripcion: `**Mareliz** es una marca de moda femenina con raíces en la cultura caribeña colombiana.
-
-El reto fue construir una identidad que transmitiera elegancia sin perder calor. Desarrollé un sistema tipográfico con formas orgánicas, una paleta de colores cálidos y una serie de elementos gráficos inspirados en el tejido artesanal.
-
-*Servicios: logotipo, paleta de color, tipografía, aplicaciones de marca.*`
-      },
-      {
-        titulo: "Yoxi Locutora",
-        categoria: "Identidad visual",
-        imagen: null,
-        descripcion: `Identidad personal para **Yoxi**, locutora y presentadora de radio en Cali.
-
-Se buscaba una marca dinámica, cercana y con presencia. El resultado es un sistema visual basado en un logotipo tipográfico con ritmo propio y una paleta de morados vibrantes.
-
-*Servicios: logotipo, manual de marca, piezas para redes sociales.*`
-      },
-      {
-        titulo: "Triny Beauty",
-        categoria: "Branding",
-        imagen: null,
-        descripcion: `**Triny Beauty** es un salón de belleza y estética con enfoque en clientas modernas y exigentes.
-
-La identidad visual mezcla lo contemporáneo con detalles dorados que evocan lujo accesible. Sistema aplicado en tarjetas, packaging y redes sociales.`
-      },
-      {
-        titulo: "Lusso Rolls",
-        categoria: "Branding",
-        imagen: null,
-        descripcion: `Proyecto de branding para **Lusso Rolls**, pastelería artesanal especializada en cinnamon rolls gourmet.
-
-Diseñé una identidad que comunica calidad artesanal y experiencia premium. Paleta cálida (cremas, canelas y dorados), tipografía serif editorial y elementos de textura manual.`
-      },
-      {
-        titulo: "Nankirua",
-        categoria: "Identidad visual",
-        imagen: null,
-        descripcion: `**Nankirua** es un emprendimiento de artesanías indígenas colombianas.
-
-El encargo fue crear una identidad que respetara el origen cultural del proyecto y lo proyectara hacia mercados contemporáneos. Usé formas geométricas inspiradas en los tejidos wayuu y una paleta vibrante con anclaje en colores tierra.`
-      },
-      {
-        titulo: "Viviana Ocampo",
-        categoria: "Marca personal",
-        imagen: null,
-        descripcion: `Marca personal para **Viviana Ocampo**, coach de bienestar y salud integrativa.
-
-La identidad debía transmitir calma, confianza y profesionalismo. Desarrollé un sistema visual minimalista con tipografía humanista y una paleta de verdes suaves.`
-      },
-      {
-        titulo: "Digital Crow",
-        categoria: "Branding digital",
-        imagen: null,
-        descripcion: `**Digital Crow** es una agencia de marketing digital con enfoque en startups.
-
-Diseñé una identidad con carácter técnico y actitud urbana: un cuervo estilizado como símbolo, tipografía de palo seco y una paleta oscura con acentos neón.`
-      },
-      {
-        titulo: "24 FPStudio",
-        categoria: "Identidad de estudio",
-        imagen: null,
-        descripcion: `Identidad para **24 FPStudio**, productora de video y fotografía independiente.
-
-El nombre hace referencia a los 24 fotogramas por segundo del cine. La identidad juega con la secuencia de frames como elemento gráfico, en una paleta de negro, blanco y rojo.`
-      },
-      {
-        titulo: "Iris Glasses",
-        categoria: "Branding",
-        imagen: null,
-        descripcion: `**Iris Glasses** es una óptica con propuesta de moda y accesorios de autor.
-
-El nombre evoca la parte del ojo. Diseñé un logotipo con una iris estilizada y un sistema visual refinado, con tipografía fina y paleta de colores fríos elegantes.`
-      },
-      {
-        titulo: "Tostato",
-        categoria: "Identidad gastronómica",
-        imagen: null,
-        descripcion: `**Tostato** es un café-tostador especializado en café de origen colombiano.
-
-La identidad busca comunicar artesanía, origen y ritual. Incluye logotipo, packaging para las bolsas de café, menú y señalética para el local.`
-      }
-    ],
-
-    foto: [
-      {
-        titulo: "Sesión de retrato 01",
-        categoria: "Fotografía",
-        imagen: null,
-        descripcion: `Serie de retratos de luz natural realizados en estudio improvisado.
-
-El objetivo fue explorar la **expresión mínima**: poca dirección, encuadres íntimos, luz disponible de ventana. Las imágenes forman parte de un proyecto personal en desarrollo.`
-      },
-      {
-        titulo: "Sesión de retrato 02",
-        categoria: "Fotografía",
-        imagen: null,
-        descripcion: `Segunda entrega de la serie de retratos. En esta sesión exploré el **contraste duro** como lenguaje: sombras pronunciadas, fondos neutros y una paleta desaturada en postproducción.`
-      },
-      {
-        titulo: "Sesión editorial",
-        categoria: "Fotografía editorial",
-        imagen: null,
-        descripcion: `Sesión editorial para marca de ropa local. El concepto fue *"textura urbana"*: locaciones de la ciudad como telón de fondo, paleta visual inspirada en el concreto y los grafitis de Cali.`
-      }
-    ],
-
-    video: [
-      {
-        titulo: "Proyecto audiovisual 01",
-        categoria: "Realizacion audiovisual",
-        imagen: null,
-        descripcion: `Cortometraje documental sobre artesanos del centro de Cali.
-
-Dirección, fotografía y montaje propios. El proyecto fue seleccionado para una muestra universitaria de cine independiente en 2024.`
-      },
-      {
-        titulo: "Proyecto audiovisual 02",
-        categoria: "Realización audiovisual",
-        imagen: null,
-        descripcion: `Video institucional para ONG ambiental. Producción completa: guion, producción, grabación y postproducción.
-
-Duración: 3 minutos. Formato: horizontal 16:9 y vertical 9:16 para redes.`
-      }
-    ],
-
-    otros: [
-      {
-        titulo: "ContadorDex TCG",
-        categoria: "Diseño de apps",
-        imagen: null,
-        descripcion: `Aplicación web progresiva para llevar el conteo de vida y estados en juegos de cartas coleccionables.
-
-Diseñé la interfaz completa y la desarrollé en HTML/CSS/JS puro. Foco en usabilidad mobile, interfaz oscura y microinteracciones cómodas.`
-      }
-    ]
-
-  };
-
-  /* ═══ RENDER ════════════════════════════════════════════════ */
+  let proyectos = {};
 
   const categoryLabels = {
     diseno: "Diseño Gráfico",
@@ -904,6 +760,8 @@ Diseñé la interfaz completa y la desarrollé en HTML/CSS/JS puro. Foco en usab
     video:  "▶",
     otros:  "◈"
   };
+
+  /* ═══ RENDER ════════════════════════════════════════════════ */
 
   function buildGrid(tabKey) {
     const grid = document.getElementById(`grid-${tabKey}`);
@@ -922,9 +780,10 @@ Diseñé la interfaz completa y la desarrollé en HTML/CSS/JS puro. Foco en usab
       <div class="project-card" data-tab="${tabKey}" data-index="${i}" role="button" tabindex="0" aria-label="Ver ${p.titulo}">
         <div class="card-img-wrap">
           ${p.imagen
-            ? `<img src="${p.imagen}" alt="${p.titulo}" loading="lazy">`
-            : `<div class="card-img-placeholder">${icons[tabKey] || '◇'}</div>`
+            ? `<img src="${p.imagen}" alt="${p.titulo}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+            : ''
           }
+          <div class="card-img-placeholder" style="${p.imagen ? 'display:none' : ''}">${icons[tabKey] || '◇'}</div>
         </div>
         <div class="card-body">
           <div class="card-label">${p.categoria}</div>
@@ -944,7 +803,28 @@ Diseñé la interfaz completa y la desarrollé en HTML/CSS/JS puro. Foco en usab
     });
   }
 
-  Object.keys(proyectos).forEach(buildGrid);
+  /* ═══ CARGA DEL JSON ════════════════════════════════════════ */
+
+  function mostrarError() {
+    ['diseno','foto','video','otros'].forEach(tab => {
+      const grid = document.getElementById(`grid-${tab}`);
+      if (grid) grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-state-icon">○</div>
+        <p class="empty-state-text">No se pudo cargar proyectos.json</p>
+      </div>`;
+    });
+  }
+
+  fetch('proyectos.json')
+    .then(r => {
+      if (!r.ok) throw new Error('No se encontró proyectos.json');
+      return r.json();
+    })
+    .then(data => {
+      proyectos = data;
+      Object.keys(categoryLabels).forEach(buildGrid);
+    })
+    .catch(() => mostrarError());
 
   /* ═══ TABS ════════════════════════════════════════════════ */
 
