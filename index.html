@@ -13,33 +13,26 @@
             --text-muted: #888888;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
         body { background-color: var(--bg-color); color: var(--primary); height: 100vh; overflow: hidden; }
 
-        /* Estructura de Vistas */
         .page { display: none; height: calc(100vh - 60px); padding: 20px; overflow-y: auto; }
         .page.active { display: block; }
 
-        /* Navegación Inferior */
-        nav { 
-            position: fixed; bottom: 0; width: 100%; height: 60px; 
-            background: #000; display: flex; justify-content: space-around; 
-            align-items: center; border-top: 1px solid #333;
-        }
-        .nav-btn { color: var(--text-muted); cursor: pointer; font-size: 14px; }
+        nav { position: fixed; bottom: 0; width: 100%; height: 60px; background: #000; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; }
+        .nav-btn { color: var(--text-muted); cursor: pointer; font-size: 14px; font-weight: bold; }
         .nav-btn.active { color: var(--accent); }
 
-        /* Contenedor de Proyectos */
-        .grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 20px; }
-        .card { background: var(--surface); border-radius: 12px; padding: 15px; }
-        .card img { width: 100%; border-radius: 8px; margin-bottom: 10px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .card { background: var(--surface); border-radius: 12px; padding: 10px; text-align: center; }
+        .card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
+        .card h3 { font-size: 12px; }
     </style>
 </head>
 <body>
 
     <div id="diseno" class="page active">
-        <h1>Diseño Gráfico</h1>
+        <h1>Diseño</h1>
         <div class="grid" id="grid-diseno"></div>
     </div>
 
@@ -54,21 +47,40 @@
     </div>
 
     <nav>
-        <div class="nav-btn active" onclick="showPage('diseno')">Diseño</div>
-        <div class="nav-btn" onclick="showPage('foto')">Foto</div>
-        <div class="nav-btn" onclick="showPage('video')">Video</div>
+        <div class="nav-btn active" onclick="showPage('diseno', this)">Diseño</div>
+        <div class="nav-btn" onclick="showPage('foto', this)">Foto</div>
+        <div class="nav-btn" onclick="showPage('video', this)">Video</div>
     </nav>
 
     <script>
-        function showPage(pageId) {
-            // Cambiar vistas
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            
-            // Cambiar botones
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+        const proyectos = {
+            diseno: ["Mareliz", "Yoxi Locutora", "Triny Beauty", "Lusso Rolls", "Nankirua", "Viviana Ocampo", "Digital Crow", "24 FPStudio", "Iris Glasses", "Tostato"],
+            foto: ["Sesión 1", "Sesión 2", "Sesión 3"],
+            video: ["Proyecto 1", "Proyecto 2", "Proyecto 3"]
+        };
+
+        function cargarProyectos() {
+            for (const categoria in proyectos) {
+                const grid = document.getElementById(`grid-${categoria}`);
+                proyectos[categoria].forEach(nombre => {
+                    grid.innerHTML += `
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" alt="${nombre}">
+                            <h3>${nombre}</h3>
+                        </div>
+                    `;
+                });
+            }
         }
+
+        function showPage(pageId, btn) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        cargarProyectos();
     </script>
 </body>
 </html>
