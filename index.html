@@ -1,89 +1,1029 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Portafolio | Camilo Muriel</title>
-    <style>
-        :root {
-            --bg-color: #121212;
-            --surface: #1e2024;
-            --primary: #ffffff;
-            --accent: #3498db;
-            --text-muted: #888888;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Camilo Muriel — Portafolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <!-- marked.js para renderizar markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--primary); height: 100vh; overflow: hidden; }
+  <style>
+    :root {
+      --bg:        #0f0f11;
+      --surface:   #18181c;
+      --surface2:  #212126;
+      --border:    rgba(255,255,255,0.07);
+      --border2:   rgba(255,255,255,0.13);
+      --accent:    #c8a96e;
+      --accent2:   #e8c98e;
+      --text:      #f0ece4;
+      --muted:     #888480;
+      --muted2:    #5a5754;
+      --nav-h:     64px;
+      --header-h:  72px;
+    }
 
-        .page { display: none; height: calc(100vh - 60px); padding: 20px; overflow-y: auto; }
-        .page.active { display: block; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        nav { position: fixed; bottom: 0; width: 100%; height: 60px; background: #000; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; }
-        .nav-btn { color: var(--text-muted); cursor: pointer; font-size: 14px; font-weight: bold; }
-        .nav-btn.active { color: var(--accent); }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .card { background: var(--surface); border-radius: 12px; padding: 10px; text-align: center; }
-        .card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
-        .card h3 { font-size: 12px; }
-    </style>
+    /* ─── HEADER ─── */
+    .app-header {
+      flex-shrink: 0;
+      height: var(--header-h);
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      position: relative;
+      z-index: 10;
+    }
+
+    .header-logo {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .header-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      letter-spacing: -0.3px;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .header-title {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .header-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.6;
+    }
+
+    /* ─── TABS ─── */
+    .tabs-bar {
+      flex-shrink: 0;
+      display: flex;
+      padding: 0 20px;
+      gap: 4px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tabs-bar::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      flex-shrink: 0;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      padding: 14px 16px 13px;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 16px;
+      right: 16px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px 2px 0 0;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .tab-btn.active {
+      color: var(--accent2);
+    }
+
+    .tab-btn.active::after {
+      opacity: 1;
+    }
+
+    /* ─── CONTENT AREA ─── */
+    .content-wrap {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .tab-panel {
+      display: none;
+      height: 100%;
+      overflow-y: auto;
+      padding: 20px 20px 32px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--surface2) transparent;
+    }
+    .tab-panel.active { display: block; }
+    .tab-panel::-webkit-scrollbar { width: 3px; }
+    .tab-panel::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 2px; }
+
+    /* ─── SECTION HEADER ─── */
+    .section-header {
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .section-sub {
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ─── PROJECT GRID ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* ─── PROJECT CARD ─── */
+    .project-card {
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+    }
+
+    .project-card:active {
+      transform: scale(0.97);
+    }
+
+    .project-card:hover {
+      border-color: var(--border2);
+    }
+
+    .card-img-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: var(--surface2);
+      position: relative;
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .card-img-wrap img {
+      transform: scale(1.03);
+    }
+
+    .card-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted2);
+      font-size: 28px;
+    }
+
+    .card-body {
+      padding: 10px 12px 12px;
+    }
+
+    .card-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3px;
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    /* ─── MODAL OVERLAY ─── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-sheet {
+      background: var(--surface);
+      border-radius: 24px 24px 0 0;
+      border-top: 1px solid var(--border2);
+      max-height: 90dvh;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(30px);
+      transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .modal-overlay.open .modal-sheet {
+      transform: translateY(0);
+    }
+
+    .modal-handle {
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      padding: 12px 0 8px;
+    }
+
+    .modal-handle-bar {
+      width: 36px;
+      height: 4px;
+      background: var(--border2);
+      border-radius: 2px;
+    }
+
+    .modal-top-bar {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 20px 16px;
+    }
+
+    .modal-category {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .modal-close {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      transition: color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .modal-close:active { color: var(--text); }
+
+    .modal-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 20px 40px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--surface2) transparent;
+    }
+    .modal-scroll::-webkit-scrollbar { width: 3px; }
+    .modal-scroll::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 2px; }
+
+    .modal-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+      background: var(--surface2);
+      margin-bottom: 20px;
+    }
+
+    .modal-img-placeholder {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: var(--surface2);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted2);
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    /* Markdown rendered content */
+    .modal-desc {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .modal-desc p { margin-bottom: 12px; }
+    .modal-desc p:last-child { margin-bottom: 0; }
+    .modal-desc strong { color: var(--text); font-weight: 500; }
+    .modal-desc em { font-style: italic; color: var(--accent); }
+    .modal-desc a { color: var(--accent); text-decoration: underline; }
+    .modal-desc ul, .modal-desc ol { padding-left: 18px; margin-bottom: 12px; }
+    .modal-desc li { margin-bottom: 4px; }
+    .modal-desc h2, .modal-desc h3 {
+      color: var(--text);
+      font-weight: 500;
+      margin: 16px 0 8px;
+      font-size: 15px;
+    }
+
+    /* Markdown source toggle */
+    .md-toggle {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .md-toggle-btn {
+      background: transparent;
+      border: 1px solid var(--border2);
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s, border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .md-toggle-btn:active { color: var(--text); }
+
+    .md-source {
+      display: none;
+      margin-top: 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.6;
+    }
+
+    .md-source.visible { display: block; }
+
+    /* ─── ABOUT PANEL ─── */
+    .about-section {
+      padding: 4px 0 32px;
+    }
+
+    .about-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 2px solid var(--border2);
+      margin-bottom: 16px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-avatar-placeholder {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 2px solid var(--border2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .about-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .about-role {
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .about-bio {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .about-bio p { margin-bottom: 12px; }
+
+    .skills-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted2);
+      margin-bottom: 12px;
+    }
+
+    .skills-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .skill-tag {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--muted);
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 20px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 400;
+      transition: border-color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .contact-link:active { border-color: var(--accent); }
+
+    .contact-link-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--surface2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .contact-link-info { flex: 1; }
+    .contact-link-label { font-size: 11px; color: var(--muted); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .project-card {
+      animation: fadeUp 0.3s ease both;
+    }
+
+    /* stagger */
+    .project-card:nth-child(1)  { animation-delay: 0.04s; }
+    .project-card:nth-child(2)  { animation-delay: 0.08s; }
+    .project-card:nth-child(3)  { animation-delay: 0.12s; }
+    .project-card:nth-child(4)  { animation-delay: 0.16s; }
+    .project-card:nth-child(5)  { animation-delay: 0.20s; }
+    .project-card:nth-child(6)  { animation-delay: 0.24s; }
+    .project-card:nth-child(7)  { animation-delay: 0.28s; }
+    .project-card:nth-child(8)  { animation-delay: 0.32s; }
+    .project-card:nth-child(9)  { animation-delay: 0.36s; }
+    .project-card:nth-child(10) { animation-delay: 0.40s; }
+    .project-card:nth-child(11) { animation-delay: 0.44s; }
+    .project-card:nth-child(12) { animation-delay: 0.48s; }
+
+    /* ─── EMPTY STATE ─── */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--muted2);
+      gap: 12px;
+    }
+
+    .empty-state-icon { font-size: 36px; }
+    .empty-state-text { font-size: 13px; line-height: 1.6; max-width: 200px; }
+  </style>
 </head>
 <body>
 
-    <div id="diseno" class="page active">
-        <h1>Diseño</h1>
-        <div class="grid" id="grid-diseno"></div>
+  <!-- ─── HEADER ─── -->
+  <header class="app-header">
+    <div class="header-logo">
+      <span class="header-name">Camilo Muriel</span>
+      <span class="header-title">Diseñador &amp; Creador Visual</span>
     </div>
+    <div class="header-dot"></div>
+  </header>
 
-    <div id="foto" class="page">
-        <h1>Fotografía</h1>
-        <div class="grid" id="grid-foto"></div>
+  <!-- ─── TABS ─── -->
+  <nav class="tabs-bar" role="tablist" aria-label="Secciones del portafolio">
+    <button class="tab-btn active" data-tab="diseno" role="tab">Diseño Gráfico</button>
+    <button class="tab-btn"        data-tab="foto"   role="tab">Fotografía</button>
+    <button class="tab-btn"        data-tab="video"  role="tab">Audiovisual</button>
+    <button class="tab-btn"        data-tab="otros"  role="tab">Otros</button>
+    <button class="tab-btn"        data-tab="sobre"  role="tab">Sobre mí</button>
+  </nav>
+
+  <!-- ─── CONTENT ─── -->
+  <main class="content-wrap">
+
+    <!-- DISEÑO GRÁFICO -->
+    <section class="tab-panel active" id="panel-diseno" role="tabpanel">
+      <div class="section-header">
+        <h1 class="section-title">Diseño Gráfico</h1>
+        <p class="section-sub">Identidad visual &amp; branding</p>
+      </div>
+      <div class="projects-grid" id="grid-diseno"></div>
+    </section>
+
+    <!-- FOTOGRAFÍA -->
+    <section class="tab-panel" id="panel-foto" role="tabpanel">
+      <div class="section-header">
+        <h1 class="section-title">Fotografía</h1>
+        <p class="section-sub">Retrato, producto &amp; editorial</p>
+      </div>
+      <div class="projects-grid" id="grid-foto"></div>
+    </section>
+
+    <!-- AUDIOVISUAL -->
+    <section class="tab-panel" id="panel-video" role="tabpanel">
+      <div class="section-header">
+        <h1 class="section-title">Audiovisual</h1>
+        <p class="section-sub">Video, dirección &amp; montaje</p>
+      </div>
+      <div class="projects-grid" id="grid-video"></div>
+    </section>
+
+    <!-- OTROS -->
+    <section class="tab-panel" id="panel-otros" role="tabpanel">
+      <div class="section-header">
+        <h1 class="section-title">Otros proyectos</h1>
+        <p class="section-sub">Experimentación &amp; varios</p>
+      </div>
+      <div class="projects-grid" id="grid-otros"></div>
+    </section>
+
+    <!-- SOBRE MÍ -->
+    <section class="tab-panel" id="panel-sobre" role="tabpanel">
+      <div class="about-section">
+        <div class="about-avatar-placeholder">CM</div>
+        <h1 class="about-name">Camilo Muriel</h1>
+        <p class="about-role">Diseñador · Fotógrafo · Realizador</p>
+        <div class="about-bio">
+          <p>Creador visual con experiencia en diseño gráfico, fotografía y realización audiovisual. Me interesa construir piezas que comunican con claridad y tienen carácter propio.</p>
+          <p>Trabajo desde Cali, Colombia, con clientes y proyectos que valoran la identidad, la coherencia visual y la narrativa.</p>
+        </div>
+        <p class="skills-label">Disciplinas</p>
+        <div class="skills-tags">
+          <span class="skill-tag">Identidad visual</span>
+          <span class="skill-tag">Branding</span>
+          <span class="skill-tag">Fotografía editorial</span>
+          <span class="skill-tag">Retrato</span>
+          <span class="skill-tag">Dirección de video</span>
+          <span class="skill-tag">Motion</span>
+          <span class="skill-tag">Montaje</span>
+        </div>
+        <p class="skills-label">Contacto</p>
+        <div class="contact-links">
+          <a href="mailto:camilo@ejemplo.com" class="contact-link">
+            <div class="contact-link-icon">✉️</div>
+            <div class="contact-link-info">
+              <div>camilo@ejemplo.com</div>
+              <div class="contact-link-label">Correo electrónico</div>
+            </div>
+          </a>
+          <a href="https://instagram.com/camilomurielph" target="_blank" class="contact-link">
+            <div class="contact-link-icon">📷</div>
+            <div class="contact-link-info">
+              <div>@camilomurielph</div>
+              <div class="contact-link-label">Instagram</div>
+            </div>
+          </a>
+          <a href="https://camilomurielph.github.io/portafolio/" target="_blank" class="contact-link">
+            <div class="contact-link-icon">🌐</div>
+            <div class="contact-link-info">
+              <div>camilomurielph.github.io/portafolio</div>
+              <div class="contact-link-label">Sitio web</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── MODAL ─── -->
+  <div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-label="Proyecto">
+    <div class="modal-sheet">
+      <div class="modal-handle"><div class="modal-handle-bar"></div></div>
+      <div class="modal-top-bar">
+        <span class="modal-category" id="modal-category"></span>
+        <button class="modal-close" id="modal-close" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-scroll">
+        <div id="modal-img-wrap"></div>
+        <h2 class="modal-title" id="modal-title"></h2>
+        <div class="modal-desc" id="modal-desc"></div>
+        <div class="md-toggle" id="md-toggle">
+          <button class="md-toggle-btn" id="md-toggle-btn">
+            <span>{ }</span> Ver markdown
+          </button>
+          <pre class="md-source" id="md-source"></pre>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div id="video" class="page">
-        <h1>Audiovisual</h1>
-        <div class="grid" id="grid-video"></div>
-    </div>
+  <script>
+  /* ═══════════════════════════════════════════════════════════════
+     DATOS DE PROYECTOS
+     ─────────────────────────────────────────────────────────────
+     Para agregar o editar proyectos, modifica el objeto `proyectos`.
+     Cada proyecto tiene:
+       - titulo     : nombre del proyecto
+       - categoria  : etiqueta visible en el card y en la ficha
+       - imagen     : ruta relativa a la imagen (ej: "assets/mareliz.jpg")
+                      deja null o "" para mostrar el placeholder
+       - descripcion: texto en formato Markdown (párrafos, negritas, listas, etc.)
+  ═══════════════════════════════════════════════════════════════ */
 
-    <nav>
-        <div class="nav-btn active" onclick="showPage('diseno', this)">Diseño</div>
-        <div class="nav-btn" onclick="showPage('foto', this)">Foto</div>
-        <div class="nav-btn" onclick="showPage('video', this)">Video</div>
-    </nav>
+  const proyectos = {
 
-    <script>
-        const proyectos = {
-            diseno: ["Mareliz", "Yoxi Locutora", "Triny Beauty", "Lusso Rolls", "Nankirua", "Viviana Ocampo", "Digital Crow", "24 FPStudio", "Iris Glasses", "Tostato"],
-            foto: ["Sesión 1", "Sesión 2", "Sesión 3"],
-            video: ["Proyecto 1", "Proyecto 2", "Proyecto 3"]
-        };
+    diseno: [
+      {
+        titulo: "Mareliz",
+        categoria: "Identidad visual",
+        imagen: null,
+        descripcion: `**Mareliz** es una marca de moda femenina con raíces en la cultura caribeña colombiana.
 
-function cargarProyectos() {
-            for (const categoria in proyectos) {
-                const grid = document.getElementById(`grid-${categoria}`);
-                // Definimos la ruta de la imagen que subiste
-                const imagenDefault = "assets/DSC04892.jpg"; 
-                
-                proyectos[categoria].forEach(nombre => {
-                    grid.innerHTML += `
-                        <div class="card">
-                            <img src="${imagenDefault}" alt="${nombre}">
-                            <h3>${nombre}</h3>
-                        </div>
-                    `;
-                });
-            }
+El reto fue construir una identidad que transmitiera elegancia sin perder calor. Desarrollé un sistema tipográfico con formas orgánicas, una paleta de colores cálidos y una serie de elementos gráficos inspirados en el tejido artesanal.
+
+*Servicios: logotipo, paleta de color, tipografía, aplicaciones de marca.*`
+      },
+      {
+        titulo: "Yoxi Locutora",
+        categoria: "Identidad visual",
+        imagen: null,
+        descripcion: `Identidad personal para **Yoxi**, locutora y presentadora de radio en Cali.
+
+Se buscaba una marca dinámica, cercana y con presencia. El resultado es un sistema visual basado en un logotipo tipográfico con ritmo propio y una paleta de morados vibrantes.
+
+*Servicios: logotipo, manual de marca, piezas para redes sociales.*`
+      },
+      {
+        titulo: "Triny Beauty",
+        categoria: "Branding",
+        imagen: null,
+        descripcion: `**Triny Beauty** es un salón de belleza y estética con enfoque en clientas modernas y exigentes.
+
+La identidad visual mezcla lo contemporáneo con detalles dorados que evocan lujo accesible. Sistema aplicado en tarjetas, packaging y redes sociales.`
+      },
+      {
+        titulo: "Lusso Rolls",
+        categoria: "Branding",
+        imagen: null,
+        descripcion: `Proyecto de branding para **Lusso Rolls**, pastelería artesanal especializada en cinnamon rolls gourmet.
+
+Diseñé una identidad que comunica calidad artesanal y experiencia premium. Paleta cálida (cremas, canelas y dorados), tipografía serif editorial y elementos de textura manual.`
+      },
+      {
+        titulo: "Nankirua",
+        categoria: "Identidad visual",
+        imagen: null,
+        descripcion: `**Nankirua** es un emprendimiento de artesanías indígenas colombianas.
+
+El encargo fue crear una identidad que respetara el origen cultural del proyecto y lo proyectara hacia mercados contemporáneos. Usé formas geométricas inspiradas en los tejidos wayuu y una paleta vibrante con anclaje en colores tierra.`
+      },
+      {
+        titulo: "Viviana Ocampo",
+        categoria: "Marca personal",
+        imagen: null,
+        descripcion: `Marca personal para **Viviana Ocampo**, coach de bienestar y salud integrativa.
+
+La identidad debía transmitir calma, confianza y profesionalismo. Desarrollé un sistema visual minimalista con tipografía humanista y una paleta de verdes suaves.`
+      },
+      {
+        titulo: "Digital Crow",
+        categoria: "Branding digital",
+        imagen: null,
+        descripcion: `**Digital Crow** es una agencia de marketing digital con enfoque en startups.
+
+Diseñé una identidad con carácter técnico y actitud urbana: un cuervo estilizado como símbolo, tipografía de palo seco y una paleta oscura con acentos neón.`
+      },
+      {
+        titulo: "24 FPStudio",
+        categoria: "Identidad de estudio",
+        imagen: null,
+        descripcion: `Identidad para **24 FPStudio**, productora de video y fotografía independiente.
+
+El nombre hace referencia a los 24 fotogramas por segundo del cine. La identidad juega con la secuencia de frames como elemento gráfico, en una paleta de negro, blanco y rojo.`
+      },
+      {
+        titulo: "Iris Glasses",
+        categoria: "Branding",
+        imagen: null,
+        descripcion: `**Iris Glasses** es una óptica con propuesta de moda y accesorios de autor.
+
+El nombre evoca la parte del ojo. Diseñé un logotipo con una iris estilizada y un sistema visual refinado, con tipografía fina y paleta de colores fríos elegantes.`
+      },
+      {
+        titulo: "Tostato",
+        categoria: "Identidad gastronómica",
+        imagen: null,
+        descripcion: `**Tostato** es un café-tostador especializado en café de origen colombiano.
+
+La identidad busca comunicar artesanía, origen y ritual. Incluye logotipo, packaging para las bolsas de café, menú y señalética para el local.`
+      }
+    ],
+
+    foto: [
+      {
+        titulo: "Sesión de retrato 01",
+        categoria: "Fotografía",
+        imagen: null,
+        descripcion: `Serie de retratos de luz natural realizados en estudio improvisado.
+
+El objetivo fue explorar la **expresión mínima**: poca dirección, encuadres íntimos, luz disponible de ventana. Las imágenes forman parte de un proyecto personal en desarrollo.`
+      },
+      {
+        titulo: "Sesión de retrato 02",
+        categoria: "Fotografía",
+        imagen: null,
+        descripcion: `Segunda entrega de la serie de retratos. En esta sesión exploré el **contraste duro** como lenguaje: sombras pronunciadas, fondos neutros y una paleta desaturada en postproducción.`
+      },
+      {
+        titulo: "Sesión editorial",
+        categoria: "Fotografía editorial",
+        imagen: null,
+        descripcion: `Sesión editorial para marca de ropa local. El concepto fue *"textura urbana"*: locaciones de la ciudad como telón de fondo, paleta visual inspirada en el concreto y los grafitis de Cali.`
+      }
+    ],
+
+    video: [
+      {
+        titulo: "Proyecto audiovisual 01",
+        categoria: "Realizacion audiovisual",
+        imagen: null,
+        descripcion: `Cortometraje documental sobre artesanos del centro de Cali.
+
+Dirección, fotografía y montaje propios. El proyecto fue seleccionado para una muestra universitaria de cine independiente en 2024.`
+      },
+      {
+        titulo: "Proyecto audiovisual 02",
+        categoria: "Realización audiovisual",
+        imagen: null,
+        descripcion: `Video institucional para ONG ambiental. Producción completa: guion, producción, grabación y postproducción.
+
+Duración: 3 minutos. Formato: horizontal 16:9 y vertical 9:16 para redes.`
+      }
+    ],
+
+    otros: [
+      {
+        titulo: "ContadorDex TCG",
+        categoria: "Diseño de apps",
+        imagen: null,
+        descripcion: `Aplicación web progresiva para llevar el conteo de vida y estados en juegos de cartas coleccionables.
+
+Diseñé la interfaz completa y la desarrollé en HTML/CSS/JS puro. Foco en usabilidad mobile, interfaz oscura y microinteracciones cómodas.`
+      }
+    ]
+
+  };
+
+  /* ═══ RENDER ════════════════════════════════════════════════ */
+
+  const categoryLabels = {
+    diseno: "Diseño Gráfico",
+    foto:   "Fotografía",
+    video:  "Audiovisual",
+    otros:  "Otros proyectos"
+  };
+
+  const icons = {
+    diseno: "✦",
+    foto:   "◉",
+    video:  "▶",
+    otros:  "◈"
+  };
+
+  function buildGrid(tabKey) {
+    const grid = document.getElementById(`grid-${tabKey}`);
+    if (!grid) return;
+    const items = proyectos[tabKey] || [];
+
+    if (items.length === 0) {
+      grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-state-icon">○</div>
+        <p class="empty-state-text">Proyectos próximamente</p>
+      </div>`;
+      return;
+    }
+
+    grid.innerHTML = items.map((p, i) => `
+      <div class="project-card" data-tab="${tabKey}" data-index="${i}" role="button" tabindex="0" aria-label="Ver ${p.titulo}">
+        <div class="card-img-wrap">
+          ${p.imagen
+            ? `<img src="${p.imagen}" alt="${p.titulo}" loading="lazy">`
+            : `<div class="card-img-placeholder">${icons[tabKey] || '◇'}</div>`
+          }
+        </div>
+        <div class="card-body">
+          <div class="card-label">${p.categoria}</div>
+          <div class="card-title">${p.titulo}</div>
+        </div>
+      </div>
+    `).join('');
+
+    grid.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('click', () => openModal(card.dataset.tab, +card.dataset.index));
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openModal(card.dataset.tab, +card.dataset.index);
         }
+      });
+    });
+  }
 
-        function showPage(pageId, btn) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            btn.classList.add('active');
-        }
+  Object.keys(proyectos).forEach(buildGrid);
 
-        cargarProyectos();
-    </script>
+  /* ═══ TABS ════════════════════════════════════════════════ */
+
+  const tabBtns   = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(`panel-${target}`)?.classList.add('active');
+    });
+  });
+
+  /* ═══ MODAL ════════════════════════════════════════════════ */
+
+  const modal        = document.getElementById('modal');
+  const modalClose   = document.getElementById('modal-close');
+  const modalCat     = document.getElementById('modal-category');
+  const modalImgWrap = document.getElementById('modal-img-wrap');
+  const modalTitle   = document.getElementById('modal-title');
+  const modalDesc    = document.getElementById('modal-desc');
+  const mdToggleBtn  = document.getElementById('md-toggle-btn');
+  const mdSource     = document.getElementById('md-source');
+  let mdVisible      = false;
+
+  function openModal(tabKey, index) {
+    const p = proyectos[tabKey][index];
+
+    modalCat.textContent = categoryLabels[tabKey] || tabKey;
+    modalTitle.textContent = p.titulo;
+
+    if (p.imagen) {
+      modalImgWrap.innerHTML = `<img class="modal-img" src="${p.imagen}" alt="${p.titulo}">`;
+    } else {
+      modalImgWrap.innerHTML = `<div class="modal-img-placeholder">${icons[tabKey] || '◇'}</div>`;
+    }
+
+    const raw = p.descripcion || '';
+    modalDesc.innerHTML = typeof marked !== 'undefined' ? marked.parse(raw) : raw.replace(/\n/g, '<br>');
+    mdSource.textContent = raw;
+    mdSource.classList.remove('visible');
+    mdToggleBtn.innerHTML = '<span>{ }</span> Ver markdown';
+    mdVisible = false;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+  mdToggleBtn.addEventListener('click', () => {
+    mdVisible = !mdVisible;
+    mdSource.classList.toggle('visible', mdVisible);
+    mdToggleBtn.innerHTML = mdVisible
+      ? '<span>{ }</span> Ocultar markdown'
+      : '<span>{ }</span> Ver markdown';
+  });
+
+  /* Swipe down to close */
+  let touchStartY = 0;
+  const sheet = document.querySelector('.modal-sheet');
+
+  sheet.addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+  sheet.addEventListener('touchend', e => {
+    if (e.changedTouches[0].clientY - touchStartY > 80) closeModal();
+  }, { passive: true });
+
+  /* Escape key */
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  </script>
+
 </body>
 </html>
