@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-  <!-- marked.js para renderizar markdown -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <style>
@@ -127,13 +126,8 @@
       transition: opacity 0.2s ease;
     }
 
-    .tab-btn.active {
-      color: var(--accent2);
-    }
-
-    .tab-btn.active::after {
-      opacity: 1;
-    }
+    .tab-btn.active { color: var(--accent2); }
+    .tab-btn.active::after { opacity: 1; }
 
     /* ─── CONTENT AREA ─── */
     .content-wrap {
@@ -155,9 +149,7 @@
     .tab-panel::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 2px; }
 
     /* ─── SECTION HEADER ─── */
-    .section-header {
-      margin-bottom: 20px;
-    }
+    .section-header { margin-bottom: 20px; }
 
     .section-title {
       font-family: 'DM Serif Display', serif;
@@ -192,15 +184,11 @@
       transition: transform 0.15s ease, border-color 0.15s ease;
       -webkit-tap-highlight-color: transparent;
       position: relative;
+      animation: fadeUp 0.3s ease both;
     }
 
-    .project-card:active {
-      transform: scale(0.97);
-    }
-
-    .project-card:hover {
-      border-color: var(--border2);
-    }
+    .project-card:active { transform: scale(0.97); }
+    .project-card:hover { border-color: var(--border2); }
 
     .card-img-wrap {
       width: 100%;
@@ -218,9 +206,7 @@
       transition: transform 0.3s ease;
     }
 
-    .project-card:hover .card-img-wrap img {
-      transform: scale(1.03);
-    }
+    .project-card:hover .card-img-wrap img { transform: scale(1.03); }
 
     .card-img-placeholder {
       width: 100%;
@@ -232,9 +218,7 @@
       font-size: 28px;
     }
 
-    .card-body {
-      padding: 10px 12px 12px;
-    }
+    .card-body { padding: 10px 12px 12px; }
 
     .card-label {
       font-size: 10px;
@@ -252,7 +236,7 @@
       line-height: 1.3;
     }
 
-    /* ─── MODAL OVERLAY ─── */
+    /* ─── MODAL ─── */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -268,10 +252,7 @@
       -webkit-backdrop-filter: blur(4px);
     }
 
-    .modal-overlay.open {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
 
     .modal-sheet {
       background: var(--surface);
@@ -284,9 +265,7 @@
       transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
     }
 
-    .modal-overlay.open .modal-sheet {
-      transform: translateY(0);
-    }
+    .modal-overlay.open .modal-sheet { transform: translateY(0); }
 
     .modal-handle {
       flex-shrink: 0;
@@ -378,7 +357,6 @@
       margin-bottom: 12px;
     }
 
-    /* Markdown rendered content */
     .modal-desc {
       color: var(--muted);
       font-size: 14px;
@@ -399,7 +377,6 @@
       font-size: 15px;
     }
 
-    /* Markdown source toggle */
     .md-toggle {
       margin-top: 20px;
       padding-top: 16px;
@@ -442,21 +419,8 @@
 
     .md-source.visible { display: block; }
 
-    /* ─── ABOUT PANEL ─── */
-    .about-section {
-      padding: 4px 0 32px;
-    }
-
-    .about-avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: var(--surface2);
-      border: 2px solid var(--border2);
-      margin-bottom: 16px;
-      object-fit: cover;
-      display: block;
-    }
+    /* ─── ABOUT ─── */
+    .about-section { padding: 4px 0 32px; }
 
     .about-avatar-placeholder {
       width: 72px;
@@ -523,11 +487,7 @@
       border-radius: 20px;
     }
 
-    .contact-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .contact-links { display: flex; flex-direction: column; gap: 10px; }
 
     .contact-link {
       display: flex;
@@ -568,11 +528,6 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .project-card {
-      animation: fadeUp 0.3s ease both;
-    }
-
-    /* stagger */
     .project-card:nth-child(1)  { animation-delay: 0.04s; }
     .project-card:nth-child(2)  { animation-delay: 0.08s; }
     .project-card:nth-child(3)  { animation-delay: 0.12s; }
@@ -600,26 +555,23 @@
 
     .empty-state-icon { font-size: 36px; }
     .empty-state-text { font-size: 13px; line-height: 1.6; max-width: 200px; }
-    @media (min-width: 600px) {
-  .content-wrap, .app-header, .tabs-bar {
-    max-width: 480px;
-    margin: 0 auto;
-  }
-  body {
-    align-items: center;
-  }
-}
 
-@media (min-width: 900px) {
-  .projects-grid {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
+    /* ─── RESPONSIVE ─── */
+    @media (min-width: 600px) {
+      body {
+        align-items: center;
+      }
+      .app-header,
+      .tabs-bar,
+      .content-wrap {
+        width: 100%;
+        max-width: 480px;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <!-- ─── HEADER ─── -->
   <header class="app-header">
     <div class="header-logo">
       <span class="header-name">Camilo Muriel</span>
@@ -628,7 +580,6 @@
     <div class="header-dot"></div>
   </header>
 
-  <!-- ─── TABS ─── -->
   <nav class="tabs-bar" role="tablist" aria-label="Secciones del portafolio">
     <button class="tab-btn active" data-tab="diseno" role="tab">Diseño Gráfico</button>
     <button class="tab-btn"        data-tab="foto"   role="tab">Fotografía</button>
@@ -637,10 +588,8 @@
     <button class="tab-btn"        data-tab="sobre"  role="tab">Sobre mí</button>
   </nav>
 
-  <!-- ─── CONTENT ─── -->
   <main class="content-wrap">
 
-    <!-- DISEÑO GRÁFICO -->
     <section class="tab-panel active" id="panel-diseno" role="tabpanel">
       <div class="section-header">
         <h1 class="section-title">Diseño Gráfico</h1>
@@ -649,7 +598,6 @@
       <div class="projects-grid" id="grid-diseno"></div>
     </section>
 
-    <!-- FOTOGRAFÍA -->
     <section class="tab-panel" id="panel-foto" role="tabpanel">
       <div class="section-header">
         <h1 class="section-title">Fotografía</h1>
@@ -658,7 +606,6 @@
       <div class="projects-grid" id="grid-foto"></div>
     </section>
 
-    <!-- AUDIOVISUAL -->
     <section class="tab-panel" id="panel-video" role="tabpanel">
       <div class="section-header">
         <h1 class="section-title">Audiovisual</h1>
@@ -667,7 +614,6 @@
       <div class="projects-grid" id="grid-video"></div>
     </section>
 
-    <!-- OTROS -->
     <section class="tab-panel" id="panel-otros" role="tabpanel">
       <div class="section-header">
         <h1 class="section-title">Otros proyectos</h1>
@@ -676,7 +622,6 @@
       <div class="projects-grid" id="grid-otros"></div>
     </section>
 
-    <!-- SOBRE MÍ -->
     <section class="tab-panel" id="panel-sobre" role="tabpanel">
       <div class="about-section">
         <div class="about-avatar-placeholder">CM</div>
@@ -725,7 +670,6 @@
 
   </main>
 
-  <!-- ─── MODAL ─── -->
   <div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-label="Proyecto">
     <div class="modal-sheet">
       <div class="modal-handle"><div class="modal-handle-bar"></div></div>
@@ -776,8 +720,6 @@
     otros:  "◈"
   };
 
-  /* ═══ RENDER ════════════════════════════════════════════════ */
-
   function buildGrid(tabKey) {
     const grid = document.getElementById(`grid-${tabKey}`);
     if (!grid) return;
@@ -817,8 +759,6 @@
       });
     });
   }
-
-  /* ═══ CARGA DEL JSON ════════════════════════════════════════ */
 
   function mostrarError() {
     ['diseno','foto','video','otros'].forEach(tab => {
@@ -907,7 +847,6 @@
       : '<span>{ }</span> Ver markdown';
   });
 
-  /* Swipe down to close */
   let touchStartY = 0;
   const sheet = document.querySelector('.modal-sheet');
 
@@ -916,7 +855,6 @@
     if (e.changedTouches[0].clientY - touchStartY > 80) closeModal();
   }, { passive: true });
 
-  /* Escape key */
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
   </script>
 
