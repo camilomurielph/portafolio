@@ -59,13 +59,16 @@
             video: ["Proyecto 1", "Proyecto 2", "Proyecto 3"]
         };
 
-        function cargarProyectos() {
+function cargarProyectos() {
             for (const categoria in proyectos) {
                 const grid = document.getElementById(`grid-${categoria}`);
+                // Definimos la ruta de la imagen que subiste
+                const imagenDefault = "assets/DSC04892.jpg"; 
+                
                 proyectos[categoria].forEach(nombre => {
                     grid.innerHTML += `
                         <div class="card">
-                            <img src="https://via.placeholder.com/300" alt="${nombre}">
+                            <img src="${imagenDefault}" alt="${nombre}">
                             <h3>${nombre}</h3>
                         </div>
                     `;
