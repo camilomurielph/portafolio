@@ -103,7 +103,7 @@
       "titulo": "ContadorDex TCG",
       "categoria": "Diseño de apps",
       "imagen": "assets/contadordex.jpg",
-      "descripcion": "Aplicación web progresiva para llevar el conteo de vida y estados en juegos de cartas coleccionables.\n\nDiseñé la interfaz completa y la desarrollé en HTML/CSS/JS puro. Foco en usabilidad mobile, interfaz oscura y microinteracciones cómodas."
+      "descripcion": "Aplicación web progresiva para llevar el conteo de vida y estados en juegos de cartas coleccionables.\n\nDiseñé la interfaz completa y la desarrollé en HTML/CSS/JS puro. Foco en usabilidad mobile, interfaz oscura y microinteracciones cómodas.\n\nhttps://camilomurielph.github.io/contadordex/"
     }
   ]
 }
