@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portafolio | Camilo Muriel</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --surface: #1e2024;
+            --primary: #ffffff;
+            --accent: #3498db;
+            --text-muted: #888888;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+
+        body { background-color: var(--bg-color); color: var(--primary); height: 100vh; overflow: hidden; }
+
+        /* Estructura de Vistas */
+        .page { display: none; height: calc(100vh - 60px); padding: 20px; overflow-y: auto; }
+        .page.active { display: block; }
+
+        /* Navegación Inferior */
+        nav { 
+            position: fixed; bottom: 0; width: 100%; height: 60px; 
+            background: #000; display: flex; justify-content: space-around; 
+            align-items: center; border-top: 1px solid #333;
+        }
+        .nav-btn { color: var(--text-muted); cursor: pointer; font-size: 14px; }
+        .nav-btn.active { color: var(--accent); }
+
+        /* Contenedor de Proyectos */
+        .grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 20px; }
+        .card { background: var(--surface); border-radius: 12px; padding: 15px; }
+        .card img { width: 100%; border-radius: 8px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="diseno" class="page active">
+        <h1>Diseño Gráfico</h1>
+        <div class="grid" id="grid-diseno"></div>
+    </div>
+
+    <div id="foto" class="page">
+        <h1>Fotografía</h1>
+        <div class="grid" id="grid-foto"></div>
+    </div>
+
+    <div id="video" class="page">
+        <h1>Audiovisual</h1>
+        <div class="grid" id="grid-video"></div>
+    </div>
+
+    <nav>
+        <div class="nav-btn active" onclick="showPage('diseno')">Diseño</div>
+        <div class="nav-btn" onclick="showPage('foto')">Foto</div>
+        <div class="nav-btn" onclick="showPage('video')">Video</div>
+    </nav>
+
+    <script>
+        function showPage(pageId) {
+            // Cambiar vistas
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            // Cambiar botones
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
